@@ -1,0 +1,72 @@
+services:
+  k8s_worker_node_1:
+    build: .
+    container_name: k8s_node_1
+    volumes:
+      - k8s_node_1_data:/var/lib/data
+    networks:
+      - k8s_cluster
+    ports:
+      - "2200:22"     # ssh port 
+      - "6443:6443"     # Kubernetes API server
+      - "10250:10250"   # Kubelet API
+      - "10255:10255"   # Read-only Kubelet API
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+    environment:
+      LOCALE_CONF: "LANG=en_US.UTF-8"
+      LOCALE_GEN: "en_US.UTF-8 UTF-8"
+
+  k8s_worker_node_2:
+    build: .
+    container_name: k8s_node_2
+    volumes:
+      - k8s_node_2_data:/var/lib/data
+    networks:
+      - k8s_cluster
+    ports:
+      - "2201:22"     # ssh port 
+      - "6444:6443"  # Kubernetes API server
+      - "10251:10250"  # Kubelet API
+      - "10256:10255"  # Read-only Kubelet API
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+    environment:
+      LOCALE_CONF: "LANG=en_US.UTF-8"
+      LOCALE_GEN: "en_US.UTF-8 UTF-8"
+
+  k8s_worker_node_3:
+    build: .
+    container_name: k8s_node_3
+    volumes:
+      - k8s_node_3_data:/var/lib/data
+    networks:
+      - k8s_cluster
+    ports:
+      - "2202:22"     # ssh port 
+      - "6445:6443"  # Kubernetes API server
+      - "10252:10250"  # Kubelet API
+      - "10257:10255"  # Read-only Kubelet API
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+    environment:
+      LOCALE_CONF: "LANG=en_US.UTF-8"
+      LOCALE_GEN: "en_US.UTF-8 UTF-8"
+
+
+volumes:
+  k8s_node_1_data:
+  k8s_node_2_data:
+  k8s_node_3_data:
+
+networks:
+  k8s_cluster:
